@@ -34,7 +34,19 @@ forge install foundry-rs/forge-std@tag=v1.16.2 \
   OpenZeppelin/openzeppelin-contracts-upgradeable@tag=v5.0.2 \
   --no-commit
 ```
+也可以直接
+```bash
+git clone --recursive git@github.com:FinchforRoot/stake-foundry.git
+```
 
+或者
+```bash
+git clone git@github.com:FinchforRoot/stake-foundry.git
+
+cd stake-foundry
+
+git submodule update --init --recursive
+```
 ### 2. 编译 / 测试 / 覆盖率
 
 ```bash
@@ -46,14 +58,21 @@ forge coverage --no-match-coverage "script/"      # 覆盖率(部署脚本按惯
 当前覆盖率:**语句 94.25% / 行 94.27% / 分支 73.08% / 函数 91.18%**。
 
 ### 3. 本地部署演练(anvil)
+创建.env文件，填入必要参数
+```text
+START_BLOCK=
+END_BLOCK=
+PRE_BLOCK=
+ETH_RPC_URL=
+ETH_PRIVATE_KEY=
+```
 
 ```bash
 # 终端 1
 anvil
 
 # 终端 2(建议 .env 里配 ETH_RPC_URL / ETH_PRIVATE_KEY,命令即可省略参数)
-forge script script/DeployMetaNodeSystem.s.sol --rpc-url http://127.0.0.1:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed
-5efcae784d7bf4f2ff80  --broadcast
+forge script script/DeployMetaNodeSystem.s.sol --rpc-url http://127.0.0.1:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80  --broadcast
 ```
 
 脚本流程:部署奖励币 → 部署实现合约 → 部署 ERC1967 代理(initialize)→ 预充奖励币 → 开 ETH 池和 TST 池,最后打印 token / proxy / impl 地址。
