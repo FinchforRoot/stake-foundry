@@ -6,6 +6,7 @@ out/
 .logs/
 .ignore/
 .idea/
+.github
 
 # Ignores development broadcast logs
 !/broadcast
